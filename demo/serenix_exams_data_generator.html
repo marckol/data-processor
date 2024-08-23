@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<script src="../data/serenix_data_dialect.js"></script>
+		<script src="../data/serenix_data_io.js"></script>
+		<script src="../data/serenix_data_processor.js"></script>
+	</head>
+	<body>
+		<script>
+			var countries = [
+			  { name: 'Cameroon', capital: 'Yaounde', countryCode: 'CM', phoneIndicator: 237 },
+			  { name: 'France', capital: 'Paris', countryCode: 'FR', phoneIndicator: 33 },
+			  { name: 'United States', capital: 'Washington, D.C.', countryCode: 'US', phoneIndicator: 1 },
+			  { name: 'India', capital: 'New Delhi', countryCode: 'IN', phoneIndicator: 91 },
+			  { name: 'Brazil', capital: 'Brasília', countryCode: 'BR', phoneIndicator: 55 },
+			  { name: 'Japan', capital: 'Tokyo', countryCode: 'JP', phoneIndicator: 81 },
+			  { name: 'Australia', capital: 'Canberra', countryCode: 'AUS', phoneIndicator: 61 },
+			  { name: 'Nigeria', capital: 'Abuja', countryCode: 'NG', phoneIndicator: 234 },
+			  { name: 'Germany', capital: 'Berlin', countryCode: 'DE', phoneIndicator: 49 },
+			];
+
+			var header = [
+				{ id: 'name', title: 'Name' },
+				{ id: 'countryCode', title: 'Country Code' },
+				{ id: 'capital', title: 'Capital' },
+				{ id: 'phoneIndicator', title: 'International Direct Dialling' },	
+			];
+			
+			var processor = new CSVProcessor();
+			console.log(processor.format(countries, header));
+			var makesOptions = {
+				header: [{"Year":"INT"}, {"Make":"string"},{"Model": "string"}, {"Description": "string"}, {"Price": "NUMBER"}],
+				items:[
+					[1997, 'Ford', 'E350', 'ac, abs, moon', 3000.00],
+					[1999, 'Chevy', 'Venture "Extended Edition"',,4900.00],
+					[1999, 'Chevy', 'Venture "Extended Edition, Very Large"',,5000.00],
+					[1996, 'Jeep', 'Grand Cherokee', 'MUST SELL!\nair, moon roof, loaded',4799.00]
+				]
+			};
+			var makes = processor.format(makesOptions);
+			console.log(makes);
+			parsedMakes = processor.parse(makes, makesOptions.header);
+			console.log(parsedMakes);
+
+			var parsedMakes02 = processor.parse({data: makes, columns: makesOptions.header, itemType: 'array'});
+			console.log(parsedMakes02);
+
+			var parsedMakes03 = processor.parse({data: makes, columns: makesOptions.header, itemType: 'object'});
+			console.log(parsedMakes03);
+		</script>	    
+	</body>
+</html>
