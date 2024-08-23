@@ -1932,3 +1932,44 @@ INT	4	-2147483648	0	2147483647	4294967295\n`
 	return DataIO;
 	
 });
+
+;(function(root, name, factory) {
+    if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+        module.exports = factory();
+    } else if (typeof define === 'function' && define.amd) {
+        define([name], factory);
+    } else {
+        root[name] = factory();
+    }    
+})(this, 'DataGenerator', function() {
+
+	function DataGenerator($) {
+		DataIO.apply(this, arguments);
+	}
+
+	;(function() {
+		var key;
+		for (key in DataIO) {
+			DataGenerator[key] = DataIO[key];
+		}
+	})();
+
+	DataGenerator.prototype = new DataIO();
+
+	DataGenerator.__CLASS__ = DataGenerator.prototype.__CLASS__ = DataGenerator;
+
+	DataGenerator.__CLASS_NAME__ = DataGenerator.prototype.__CLASS_NAME__ = 'DataGenerator';
+
+	DataGenerator.__SUPER__ = DataGenerator.__SUPER_CLASS__ = DataIO;
+
+
+	if (typeof SereniX.data.addChild === 'function') {
+		SereniX.data.addChild(DataGenerator);
+	} else {
+		SereniX.data.DataGenerator = DataGenerator;
+	}
+
+
+	return DataGenerator;
+
+});
